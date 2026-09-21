@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minguante</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:#000000; width:100%;}
+  body{
+    font-family:'Jost', sans-serif;
+    color:#ffffff;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:28px 6vw 0;
+  }
+  .brand{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:24px;
+    letter-spacing:0.5px;
+  }
+  nav{display:flex; gap:38px;}
+  nav a{
+    position:relative;
+    color:#9a9a9a;
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:0.4px;
+    padding:6px 2px;
+    transition:color .4s ease;
+  }
+  nav a::before{
+    content:"";
+    position:absolute;
+    top:-13px; left:50%;
+    width:6px; height:6px;
+    transform:translateX(-50%) scale(0);
+    background:#f4f2ea;
+    clip-path:polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    opacity:0;
+    transition:transform .45s cubic-bezier(.34,1.56,.64,1), opacity .3s ease;
+  }
+  nav a::after{
+    content:"";
+    position:absolute; left:0; bottom:-2px;
+    width:100%; height:1px;
+    background:#ffffff;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .4s ease;
+  }
+  nav a:hover{color:#ffffff;}
+  nav a:hover::before{transform:translateX(-50%) scale(1); opacity:1;}
+  nav a:hover::after{transform:scaleX(1);}
+
+  .hero{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:70px 6vw 90px;
+  }
+  .moon-wrap{
+    position:relative;
+    width:120px;
+    height:120px;
+    margin-bottom:34px;
+  }
+  .moon-glow{
+    position:absolute; inset:-60px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(244,242,234,0.16) 0%, transparent 70%);
+    filter:blur(4px);
+    animation:pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:0.7; transform:scale(1);}
+    50%{opacity:1; transform:scale(1.06);}
+  }
+  .moon{
+    position:absolute; inset:0;
+    border-radius:50%;
+    background:#f4f2ea;
+    box-shadow: inset 15px -6px 0 5px #000000;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:clamp(28px, 4.2vw, 44px);
+    line-height:1.25;
+    max-width:14ch;
+    margin-bottom:16px;
+  }
+  .hero p{
+    color:#9a9a9a;
+    font-size:15px;
+    max-width:40ch;
+    line-height:1.6;
+    margin-bottom:34px;
+  }
+  .btn{
+    position:relative;
+    display:inline-block;
+    padding:14px 34px;
+    border:1px solid #ffffff;
+    color:#ffffff;
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:0.6px;
+    overflow:visible;
+    transition:background .35s ease, color .35s ease;
+  }
+  .btn::before{
+    content:"";
+    position:absolute;
+    top:-10px; right:-8px;
+    width:7px; height:7px;
+    background:#f4f2ea;
+    clip-path:polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    opacity:0;
+    transform:scale(0);
+    transition:transform .45s cubic-bezier(.34,1.56,.64,1), opacity .3s ease;
+  }
+  .btn:hover{background:#ffffff; color:#000000;}
+  .btn:hover::before{opacity:1; transform:scale(1);}
+
+  .divider{
+    width:1px;
+    height:56px;
+    background:#1c1c1c;
+    margin:0 auto;
+  }
+
+  .collection{
+    padding:70px 6vw 100px;
+  }
+  .collection-head{
+    text-align:center;
+    margin-bottom:52px;
+  }
+  .collection-head h2{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(24px, 3vw, 32px);
+  }
+  .collection-head span{
+    display:block;
+    color:#5c5c5c;
+    font-size:13px;
+    margin-top:8px;
+    letter-spacing:0.3px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+    max-width:960px;
+    margin:0 auto;
+    border-top:1px solid #1c1c1c;
+  }
+  .card{
+    padding:40px 28px;
+    border-right:1px solid #1c1c1c;
+    border-bottom:1px solid #1c1c1c;
+    text-align:center;
+    transition:background .4s ease;
+  }
+  .card:last-child{border-right:none;}
+  .card:hover{background:#050505;}
+  .vial{
+    width:34px;
+    height:52px;
+    margin:0 auto 22px;
+    position:relative;
+  }
+  .vial::before{
+    content:"";
+    position:absolute;
+    top:0; left:50%;
+    transform:translateX(-50%);
+    width:10px; height:12px;
+    background:#ffffff;
+  }
+  .vial::after{
+    content:"";
+    position:absolute;
+    top:10px; left:0;
+    width:34px; height:42px;
+    border:1px solid #ffffff;
+  }
+  .card h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:19px;
+    margin-bottom:6px;
+  }
+  .card p{
+    color:#5c5c5c;
+    font-size:12.5px;
+    letter-spacing:0.3px;
+    margin-bottom:16px;
+  }
+  .preco{
+    font-size:14px;
+    color:#9a9a9a;
+    letter-spacing:0.3px;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 0 40px;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:13px;
+    color:#5c5c5c;
+    letter-spacing:0.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .moon-glow, nav a::before, .btn::before{animation:none; transition:none;}
+  }
+
+  @media (max-width:720px){
+    header{flex-direction:column; gap:16px;}
+    nav{gap:22px; flex-wrap:wrap; justify-content:center;}
+    .grid{grid-template-columns:1fr;}
+    .card{border-right:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Minguante</div>
+  <nav>
+    <a href="#">início</a>
+    <a href="#">loja</a>
+    <a href="#">ajuda</a>
+    <a href="#">contatos</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="moon-wrap">
+    <div class="moon-glow"></div>
+    <div class="moon"></div>
+  </div>
+  <h1>Uma fragrância feita para a noite</h1>
+  <p>Notas que se revelam devagar, como os olhos se acostumando ao escuro.</p>
+  <a href="#colecao" class="btn">compre agora esse perfume</a>
+</section>
+
+<div class="divider"></div>
+
+<section class="collection" id="colecao">
+  <div class="collection-head">
+    <h2>as melhores opções só pra você</h2>
+    <span>seleção da coleção Minguante</span>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="vial"></div>
+      <h3>Noctis</h3>
+      <p>âmbar, sândalo, baunilha</p>
+      <div class="preco">R$ 189</div>
+    </div>
+    <div class="card">
+      <div class="vial"></div>
+      <h3>Penumbra</h3>
+      <p>bergamota, jasmim, almíscar</p>
+      <div class="preco">R$ 219</div>
+    </div>
+    <div class="card">
+      <div class="vial"></div>
+      <h3>Eclipse</h3>
+      <p>cedro, couro, fumo doce</p>
+      <div class="preco">R$ 249</div>
+    </div>
+  </div>
+</section>
+
+<footer>sob o céu, sempre aberto</footer>
+
+</body>
+</html>
